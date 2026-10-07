@@ -1,8 +1,8 @@
+const path = require('path');
 require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const bcrypt = require('bcryptjs');
 const db = require('./db');
 const { tokenYarat, ruxsatTekshir } = require('./auth');
@@ -330,11 +330,9 @@ app.listen(PORT, () => {
 
 
 
-const path = require('path');
-
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Barcha soʻrovlarda frontend index.html faylini koʻrsatish
-app.get('*', (req, res) => {
+app.get('{*path}', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });

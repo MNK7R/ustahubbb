@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UstaHub - Usta chaqirish sayti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- header qismi -->
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        UstaHub
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" id="tabCustomerBtn" onclick="showTab('customer')">Mijoz</button>
+        <button class="tab-btn" id="tabAdminBtn" onclick="showTab('admin')">Boshliq paneli</button>
+      </div>
+    </div>
+
+     
+    <div id="customerPage">
+
+      <div class="hero">
+        <p class="eyebrow">Hozir 34 ta usta onlayn</p>
+        <h1>Muammoni tanlang. <span class="orange">Usta 12 daqiqada</span> yetib keladi.</h1>
+        <p class="subtext">Dispetcherga qo'ng'iroq qilish shart emas, tizim eng yaqin va bo'sh ustani o'zi topib beradi.</p>
+      </div>
+
+      <p class="section-title">Muammo turi</p>
+
+      
+      <div class="problem-grid">
+        <div class="problem-card" onclick="selectProblem(this, 'Santexnik')">
+          <div class="problem-icon">🔧</div>
+          <div class="problem-name">Santexnik</div>
+          <div class="problem-desc">Kran, quvur, unitaz</div>
+        </div>
+
+        <div class="problem-card" onclick="selectProblem(this, 'Elektrik')">
+          <div class="problem-icon">⚡</div>
+          <div class="problem-name">Elektrik</div>
+          <div class="problem-desc">Elektr, rozetka, simlar</div>
+        </div>
+
+        <div class="problem-card" onclick="selectProblem(this, 'Konditsioner')">
+          <div class="problem-icon">❄️</div>
+          <div class="problem-name">Konditsioner</div>
+          <div class="problem-desc">O'rnatish, tozalash</div>
+        </div>
+
+        <div class="problem-card" onclick="selectProblem(this, 'Boshqa')">
+          <div class="problem-icon">🔩</div>
+          <div class="problem-name">Boshqa</div>
+          <div class="problem-desc">Boshqa turdagi ish</div>
+        </div>
+      </div>
+
+      
+      <div class="order-form" id="orderForm">
+        <label>Muammoni qisqacha yozing</label>
+        <input type="text" id="descInput" placeholder="Masalan: oshxonadagi kran oqyapti">
+
+        <label>Manzil</label>
+        <input type="text" id="addrInput" placeholder="Tuman, ko'cha, uy raqami">
+
+        <button class="btn-order" id="orderBtn" onclick="sendOrder()">Usta chaqirish</button>
+      </div>
+
+      
+      <div class="searching-box" id="searchingBox">
+        <div class="radar">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="center-dot"></div>
+        </div>
+        <p class="searching-txt">Eng yaqin ustani qidiryapmiz...</p>
+      </div>
+
+      <div class="matched-box" id="matchedBox">
+        <p class="section-title">Usta tayinlandi</p>
+        <div class="usta-card">
+          <div class="usta-avatar" id="ustaAvatar">A</div>
+          <div class="usta-info">
+            <div class="usta-name" id="ustaName">Aziz Rahimov</div>
+            <div class="usta-meta">
+              <span class="star">★ 4.9</span>
+              <span id="ustaJobs">312 ta ish</span>
+              <span id="ustaType">Santexnik</span>
+            </div>
+          </div>
+          <div class="eta-box">
+            <div class="eta-number" id="etaNumber">12</div>
+            <div class="eta-text">daqiqada yetadi</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+    <div id="adminPage" style="display:none;">
+
+      <!-- Admin login forma -->
+      <div id="adminLoginBox">
+        <div class="hero">
+          <p class="eyebrow">Himoyalangan zona</p>
+          <h1 class="admin-title">Boshliq <span class="orange">kirish</span></h1>
+          <p class="subtext">Admin paneliga kirish uchun telefon va parolni kiriting.</p>
+        </div>
+        <div class="order-form" style="display:block; max-width:420px;">
+          <label>Telefon raqami</label>
+          <input type="text" id="adminPhoneInput" placeholder="+998900000000" value="+998900000000">
+          <label>Parol</label>
+          <input type="password" id="adminPassInput" placeholder="Parolingizni kiriting">
+          <p class="form-xato" id="adminLoginXato"></p>
+          <button class="btn-order" id="adminLoginBtn" onclick="adminLogin()">Kirish</button>
+        </div>
+      </div>
+
+      <!-- Dashboard (login dan keyin) -->
+      <div id="adminDashboard" style="display:none;">
+      <div class="hero" style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+        <div>
+          <p class="eyebrow">Bugungi holat</p>
+          <h1 class="admin-title">Boshliq <span class="orange">dashboard</span></h1>
+          <p class="subtext">Barcha chaqiruvlar, ustalar va daromad bitta joyda, qo'lda kuzatmasdan.</p>
+        </div>
+        <button class="btn-small" onclick="adminChiqish()" style="margin-top:8px;">Chiqish</button>
+      </div>
+
+      
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="statBugungi">-</div>
+          <div class="stat-label">Bugungi chaqiruvlar</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statFaolUstalar">-</div>
+          <div class="stat-label">Faol ustalar</div>
+          <div class="stat-delta" id="statBandBosh">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statBandSoni">-</div>
+          <div class="stat-label">Hozir band ustalar</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Dispetcher xodimlari</div>
+          <div class="stat-delta stat-delta-orange">tizim o'zi taqsimlaydi</div>
+        </div>
+      </div>
+
+    
+      <div class="table-box">
+        <p class="section-title">So'nggi chaqiruvlar</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Tavsif</th>
+              <th>Xizmat</th>
+              <th>Usta</th>
+              <th>Holat</th>
+              <th>Vaqt</th>
+              <th>Amal</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <tr><td colspan="6">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+      <p class="section-title">Ustalar holati</p>
+      <div class="usta-list" id="ustaListContainer">
+        <div class="usta-row"><div>Yuklanmoqda...</div></div>
+      </div>
+
+      </div><!-- /adminDashboard -->
+
+    </div><!-- /adminPage -->
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
